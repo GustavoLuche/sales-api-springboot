@@ -39,6 +39,12 @@ public class Venda {
 		this.vendedor = vendedor;
 	}
 
+	public Venda(LocalDate dataVenda, Double valor, Vendedor vendedor) {
+		this.dataVenda = dataVenda;
+		this.valor = valor;
+		this.vendedor = vendedor;
+	}
+
 	public Long getId() {
 		return id;
 	}
