@@ -1,5 +1,6 @@
 package com.projeto.salesapiapringboot.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.projeto.salesapiapringboot.dto.VendaDTO;
+import com.projeto.salesapiapringboot.dto.VendedorListaDTO;
 import com.projeto.salesapiapringboot.models.Venda;
 import com.projeto.salesapiapringboot.models.Vendedor;
+import com.projeto.salesapiapringboot.projections.VendedorListaProjection;
 import com.projeto.salesapiapringboot.repositories.VendaRepository;
 import com.projeto.salesapiapringboot.repositories.VendedorRepository;
 
@@ -33,5 +36,11 @@ public class VendaService {
 				new IllegalArgumentException("Vendedor com o ID especificado não encontrado"));
 		Venda venda = new Venda(vendaDTO.getDataVenda(), vendaDTO.getValor(), vendedor);
 		return vendaRepository.save(venda);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<VendedorListaDTO> getVendedoresResumoVendasPeriodo(LocalDate dataInicial, LocalDate dataFinal) {
+		List<VendedorListaProjection> projections = vendaRepository.getVendedoresResumoVendasPeriodo(dataInicial, dataFinal);
+		return projections.stream().map(x -> new VendedorListaDTO(x)).toList();
 	}
 }
