@@ -11,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name = "tb_venda")
@@ -21,8 +23,11 @@ public class Venda {
 	private Long id;
 	
 	@Column(name = "data_venda")
+	@NotNull(message = "A data da venda deve ser fornecida")
 	private LocalDate dataVenda;
 	
+	@NotNull(message = "A data da venda deve ser fornecida")
+	@Positive(message = "O valor da venda deve ser um número positivo")
 	private Double valor;
 	
 	@ManyToOne

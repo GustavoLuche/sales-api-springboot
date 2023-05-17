@@ -91,6 +91,7 @@ public class VendaControllerTest {
 
         // Criar o controlador e chamar o método de teste
         VendaController vendaController = new VendaController(vendaService);
+        @SuppressWarnings("unchecked")
         ResponseEntity<Venda> response = (ResponseEntity<Venda>) vendaController.criarVenda(vendaDTO);
 
         // Verificar se o serviço foi chamado com os argumentos corretos
@@ -105,6 +106,27 @@ public class VendaControllerTest {
         // correto no corpo
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(vendaCriada, response.getBody());
+    }
+
+    @Test
+    public void testCriarVenda_InvalidVendedor() {
+        // Dados de exemplo para a venda com vendedor inválido
+        VendaDTO vendaDTO = new VendaDTO();
+        vendaDTO.setVendedorId(999L); // ID inválido
+        vendaDTO.setDataVenda(LocalDate.now());
+        vendaDTO.setValor(100.0);
+
+        // Mock do VendaService
+        VendaService vendaService = mock(VendaService.class);
+        when(vendaService.criarVenda(vendaDTO))
+                .thenThrow(new IllegalArgumentException("Vendedor com o ID especificado não encontrado"));
+
+        // Criar o controlador e chamar o método de teste
+        VendaController vendaController = new VendaController(vendaService);
+        ResponseEntity<?> response = vendaController.criarVenda(vendaDTO);
+
+        // Verificar se a resposta HTTP tem o código de status correto
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test

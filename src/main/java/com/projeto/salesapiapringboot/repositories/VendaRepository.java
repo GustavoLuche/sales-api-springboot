@@ -3,12 +3,15 @@ package com.projeto.salesapiapringboot.repositories;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.projeto.salesapiapringboot.models.Venda;
 import com.projeto.salesapiapringboot.projections.VendedorListaProjection;
+
+import jakarta.validation.constraints.NotNull;
 
 public interface VendaRepository extends JpaRepository<Venda, Long> {
 	
@@ -23,7 +26,7 @@ public interface VendaRepository extends JpaRepository<Venda, Long> {
             GROUP BY tb_venda.vendedor_id
                                                      """)
     List<VendedorListaProjection> getVendedoresResumoVendasPeriodo(
-            @Param("dataInicial") LocalDate dataInicial,
-            @Param("dataFinal") LocalDate dataFinal);
+      @NotNull @Param("dataInicial") LocalDate dataInicial,
+      @NotNull @Param("dataFinal") LocalDate dataFinal) throws DataAccessException;
 	
 }

@@ -37,16 +37,28 @@ public class VendaController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Venda> criarVenda(@RequestBody VendaDTO vendaDTO) {
-		Venda venda = vendaService.criarVenda(vendaDTO);
-		return ResponseEntity.status(HttpStatus.CREATED).body(venda);
+	public ResponseEntity<?> criarVenda(@RequestBody VendaDTO vendaDTO) {
+		try {
+			Venda venda = vendaService.criarVenda(vendaDTO);
+			return ResponseEntity.status(HttpStatus.CREATED).body(venda);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao criar a venda.");
+		}
 	}
 
 	@GetMapping("/vendedores")
-	public List<VendedorListaDTO> getVendedoresResumoVendasPeriodo(
+	public ResponseEntity<?> getVendedoresResumoVendasPeriodo(
 			@RequestParam("dataInicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
 			@RequestParam("dataFinal") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal) {
-		return vendaService.getVendedoresResumoVendasPeriodo(dataInicial, dataFinal);
+		try {
+			List<VendedorListaDTO> vendedores = vendaService.getVendedoresResumoVendasPeriodo(dataInicial, dataFinal);
+			return ResponseEntity.ok(vendedores);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Ocorreu um erro ao obter os vendedores.");
+		}
 	}
 
 }

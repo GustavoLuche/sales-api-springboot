@@ -4,12 +4,24 @@ import java.time.LocalDate;
 
 import com.projeto.salesapiapringboot.models.Venda;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
 public class VendaDTO {
 
 	private Long id;
+
+	@NotNull(message = "A data de venda não pode ser nula")
 	private LocalDate dataVenda;
+
+	@Positive(message = "O valor da venda deve ser positivo")
 	private Double valor;
+
+	@NotNull(message = "O ID do vendedor não pode ser nulo")
 	private Long vendedorId;
+
+	@Size(max = 100, message = "O nome do vendedor deve ter no máximo 100 caracteres")
 	private String vendedorNome;
 
 	public VendaDTO() {

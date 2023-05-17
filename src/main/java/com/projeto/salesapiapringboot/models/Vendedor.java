@@ -8,18 +8,22 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_vendedor")
 public class Vendedor {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "vendedor_nome")
+	@NotBlank(message = "O nome do vendedor não pode estar em branco.")
+	@Size(max = 100, message = "O nome do vendedor deve ter no máximo 100 caracteres.")
 	private String nome;
-	
+
 	public Vendedor() {
 	}
 
@@ -60,5 +64,5 @@ public class Vendedor {
 		Vendedor other = (Vendedor) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 }

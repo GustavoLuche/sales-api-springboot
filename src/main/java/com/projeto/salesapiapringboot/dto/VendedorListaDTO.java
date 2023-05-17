@@ -2,10 +2,18 @@ package com.projeto.salesapiapringboot.dto;
 
 import com.projeto.salesapiapringboot.projections.VendedorListaProjection;
 
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
 public class VendedorListaDTO {
 
+	@Size(max = 100, message = "O nome do vendedor deve ter no máximo 100 caracteres")
 	private String vendedorNome;
+
+	@Positive(message = "O valor da venda deve ser positivo")
     private Integer totalVendas;
+
+	@Positive(message = "O valor da venda deve ser positivo")
     private Double mediaDiariaVendas;
     
 	public VendedorListaDTO() {
