@@ -5,13 +5,13 @@ import java.time.LocalDate;
 import com.projeto.salesapiapringboot.models.Venda;
 
 public class VendaDTO {
-	
+
 	private Long id;
 	private LocalDate dataVenda;
 	private Double valor;
 	private Long vendedorId;
 	private String vendedorNome;
-	
+
 	public VendaDTO() {
 	}
 
@@ -42,5 +42,25 @@ public class VendaDTO {
 	public String getVendedorNome() {
 		return vendedorNome;
 	}
-	
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setDataVenda(LocalDate dataVenda) {
+		this.dataVenda = dataVenda;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
+
+	public void setVendedorId(Long vendedorId) {
+		this.vendedorId = vendedorId;
+	}
+
+	public void setVendedorNome(String vendedorNome) {
+		this.vendedorNome = vendedorNome;
+	}
+
 }
