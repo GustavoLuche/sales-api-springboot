@@ -18,7 +18,7 @@ public interface VendaRepository extends JpaRepository<Venda, Long> {
 	@Query(nativeQuery = true, value = """
             SELECT tb_vendedor.vendedor_nome AS vendedorNome,
             COUNT(tb_venda.id) AS totalVendas,
-            CAST(COUNT(tb_venda.id) AS DECIMAL) / DATEDIFF('DAY', :dataInicial, :dataFinal) AS mediaDiariaVendas
+            CAST(COUNT(tb_venda.id) AS DECIMAL) / (DATEDIFF('DAY', :dataInicial, :dataFinal)+1) AS mediaDiariaVendas
             FROM tb_venda
             INNER JOIN tb_vendedor ON tb_vendedor.id = tb_venda.vendedor_id
             WHERE tb_venda.data_venda >= :dataInicial
